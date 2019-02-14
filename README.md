@@ -33,6 +33,7 @@ optional arguments:
                         No not apply listed patches
 
 patches:
+  debugprint            Append data to ReleaseInform.txt
   dragonmelee           Dragon melee attack fix
   hvp                   Hardward vertex processing
   matoranrgb            Fix RGB values for Onu-Matoran

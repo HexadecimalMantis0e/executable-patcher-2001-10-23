@@ -71,6 +71,16 @@ class PatchSoundTableAmount(Patch):
 			0x81, 0xBD, 0xD4, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
 		]))
 
+class PatchDebugPrint(Patch):
+	name = 'debugprint'
+	description = 'Append data to ReleaseInform.txt'
+	def patch(self):
+		# Change "w" to "r+b" to prevent ReleaseInform.txt from resetting every launch.
+		self.fp.seek(0x6C9E7) # 0x46D5E7
+		self.fp.write(bytearray([
+			0x68, 0x38, 0x75, 0x74, 0x00 # push   offset aRB ; "r+b"
+		]))
+
 class PatchScreenRes4(Patch):
 	name = 'screenres4'
 	description = 'Set default screen resolution to 4'
@@ -191,7 +201,7 @@ class PatchDragonMelee(Patch):
 		self.fp.write(bytearray([
 			0x8B, 0x45, 0xD0,             # mov    eax, [ebp-0x30]
 			0x3D, 0x67, 0x61, 0x72, 0x64, # cmp    eax, 0x64726167 ; 'drag'
-			0x74, 0x26                    # je     0x28 
+			0x74, 0x26                    # je     0x28
 		]))
 
 def patches_list():
